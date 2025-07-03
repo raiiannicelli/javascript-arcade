@@ -112,8 +112,15 @@ export class PongGame {
         this.ctx.fillStyle = '#ff1744';
         this.ctx.fillRect(this.canvas.width - this.paddleWidth, this.aiY, this.paddleWidth, this.paddleHeight);
         // Ball
-        this.ctx.fillStyle = '#fff';
-        this.ctx.fillRect(this.ball.x, this.ball.y, this.ballSize, this.ballSize);
+        const pongImg = new window.Image();
+        pongImg.src = 'assets/pong.svg';
+        if (pongImg.complete) {
+            this.ctx.drawImage(pongImg, this.ball.x, this.ball.y, this.ballSize, this.ballSize);
+        } else {
+            pongImg.onload = () => {
+                this.ctx.drawImage(pongImg, this.ball.x, this.ball.y, this.ballSize, this.ballSize);
+            };
+        }
         // Score
         this.ctx.fillStyle = '#fff';
         this.ctx.font = '18px Arial';
@@ -126,6 +133,12 @@ export class PongGame {
             let msg = this.score.player > this.score.ai ? 'Você venceu!' : 'AI venceu!';
             this.ctx.fillText('Fim de Jogo', this.canvas.width/2 - 80, this.canvas.height/2 - 20);
             this.ctx.fillText(msg, this.canvas.width/2 - 80, this.canvas.height/2 + 20);
+            // Reload icon
+            const reloadImg = new window.Image();
+            reloadImg.src = 'assets/reload.svg';
+            reloadImg.onload = () => {
+                this.ctx.drawImage(reloadImg, this.canvas.width/2 - 16, this.canvas.height/2 + 40, 32, 32);
+            };
         }
     }
 }

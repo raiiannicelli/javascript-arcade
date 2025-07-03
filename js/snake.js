@@ -91,8 +91,15 @@ export class SnakeGame {
             this.ctx.fillRect(seg.x * this.size, seg.y * this.size, this.size - 2, this.size - 2);
         }
         // Food
-        this.ctx.fillStyle = '#ffeb3b';
-        this.ctx.fillRect(this.food.x * this.size, this.food.y * this.size, this.size - 2, this.size - 2);
+        const foodImg = new window.Image();
+        foodImg.src = 'assets/snake.svg';
+        if (foodImg.complete) {
+            this.ctx.drawImage(foodImg, this.food.x * this.size, this.food.y * this.size, this.size - 2, this.size - 2);
+        } else {
+            foodImg.onload = () => {
+                this.ctx.drawImage(foodImg, this.food.x * this.size, this.food.y * this.size, this.size - 2, this.size - 2);
+            };
+        }
         // Score
         this.ctx.fillStyle = '#fff';
         this.ctx.font = '18px Arial';
@@ -102,6 +109,12 @@ export class SnakeGame {
             this.ctx.fillStyle = '#ff1744';
             this.ctx.font = '32px Arial';
             this.ctx.fillText('Game Over', this.canvas.width/2 - 80, this.canvas.height/2);
+            // Reload icon
+            const reloadImg = new window.Image();
+            reloadImg.src = 'assets/reload.svg';
+            reloadImg.onload = () => {
+                this.ctx.drawImage(reloadImg, this.canvas.width/2 - 16, this.canvas.height/2 + 20, 32, 32);
+            };
         }
     }
 }
