@@ -112,14 +112,12 @@ export class PongGame {
         this.ctx.fillStyle = '#ff1744';
         this.ctx.fillRect(this.canvas.width - this.paddleWidth, this.aiY, this.paddleWidth, this.paddleHeight);
         // Ball
-        const pongImg = new window.Image();
-        pongImg.src = 'assets/pong.svg';
-        if (pongImg.complete) {
-            this.ctx.drawImage(pongImg, this.ball.x, this.ball.y, this.ballSize, this.ballSize);
-        } else {
-            pongImg.onload = () => {
-                this.ctx.drawImage(pongImg, this.ball.x, this.ball.y, this.ballSize, this.ballSize);
-            };
+        if (!this.pongImg) {
+            this.pongImg = new window.Image();
+            this.pongImg.src = 'assets/pong.svg';
+        }
+        if (this.pongImg.complete) {
+            this.ctx.drawImage(this.pongImg, this.ball.x, this.ball.y, this.ballSize, this.ballSize);
         }
         // Score
         this.ctx.fillStyle = '#fff';
@@ -134,11 +132,13 @@ export class PongGame {
             this.ctx.fillText('Fim de Jogo', this.canvas.width/2 - 80, this.canvas.height/2 - 20);
             this.ctx.fillText(msg, this.canvas.width/2 - 80, this.canvas.height/2 + 20);
             // Reload icon
-            const reloadImg = new window.Image();
-            reloadImg.src = 'assets/reload.svg';
-            reloadImg.onload = () => {
-                this.ctx.drawImage(reloadImg, this.canvas.width/2 - 16, this.canvas.height/2 + 40, 32, 32);
-            };
+            if (!this.reloadImg) {
+                this.reloadImg = new window.Image();
+                this.reloadImg.src = 'assets/reload.svg';
+            }
+            if (this.reloadImg.complete) {
+                this.ctx.drawImage(this.reloadImg, this.canvas.width/2 - 16, this.canvas.height/2 + 40, 32, 32);
+            }
         }
     }
 }
